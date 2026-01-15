@@ -1,1 +1,1 @@
-# kubernetes_learning
+This is a repository for learning and experimenting with Kubernetes. It contains various examples, configurations, and tutorials to help you understand how to deploy and manage applications using Kubernetes.
