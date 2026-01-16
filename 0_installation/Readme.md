@@ -81,3 +81,7 @@ Example output would be like:
 ```
 minikube
 ```
+
+## For more kubectl commands and usage refer the link:
+
+https://kubernetes.io/docs/tasks/tools/
