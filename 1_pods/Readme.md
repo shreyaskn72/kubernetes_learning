@@ -1,36 +1,44 @@
-This document provides basic commands to manage Pods in a Kubernetes cluster using `kubectl`.
+# Managing Pods in Kubernetes
 
+This document provides essential commands to manage Pods in a Kubernetes cluster using `kubectl`.
 
-Below is command to create a Pod in Kubernetes using a YAML configuration file named `pod.yaml`.
+## Creating a Pod
 
+To create a Pod in Kubernetes using a YAML configuration file (`pod.yaml`), use the following command:
 
 ```bash
 kubectl create -f pod.yaml
 ```
 
+## Listing Pods
 
-Below is the command to list all the Pods in the Kubernetes cluster.
+To list all the Pods in the Kubernetes cluster, use:
 ```bash
 
 kubectl get pods
 ```
 
-Below is the command to get detailed information about all the Pods in the Kubernetes cluster.
+
+## Viewing Detailed Pod Information
+To get detailed information about all the Pods in the cluster, run:
 ```bash
 kubectl get pods -o wide
 ```
 
-Below is the command to describe a specific Pod in Kubernetes, replacing `<pod-name>` with the actual name of the Pod.
+## Describing a specific Pod
+To describe a specific Pod, replace <pod-name> with the name of the Pod and execute:
 ```bash
 kubectl describe pod <pod-name>
 ```
 
-Below is the command to view the logs of a specific Pod in Kubernetes, replacing `<pod-name>` with the actual name of the Pod.
+## Viewing Pod Logs
+To view the logs of a specific Pod, replace <pod-name> with the name of the Pod and run:
 ```bash
 kubectl logs <pod-name>
 ```
 
-Below is the command to delete a Pod in Kubernetes using a YAML configuration file named `pod.yaml`.
+## Deleting a Pod
+To delete a Pod using the YAML configuration file (`pod.yaml`), use the following command:
 ```bash
 kubectl delete -f pod.yaml
 ```
