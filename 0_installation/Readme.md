@@ -27,13 +27,7 @@ kubectl version --client
 
 This should return the kubectl client version installed on your machine.
 
-## To verify kubernetes cluster is running run the command:
 
-```
-kubectl cluster-info
-```
-
-This should return the kubernetes cluster information if the cluster is running.
 
 ## To verify kubectl is configured to communicate with the cluster run the command:
 
@@ -80,6 +74,28 @@ Example output would be like:
 
 ```
 minikube
+```
+
+## To verify kubernetes cluster is running run the command:
+
+```
+kubectl cluster-info
+```
+
+This should return the kubernetes cluster information if the cluster is running.
+
+
+If the cluster is not running you can start the cluster using the following commands:
+For minikube:
+
+```
+minikube start
+```
+
+For kind:
+
+```
+kind create cluster
 ```
 
 ## For more kubectl commands and usage refer the link:
