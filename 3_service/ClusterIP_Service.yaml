@@ -27,4 +27,4 @@ spec:
 # kubectl get service my-clusterip-service
 # kubectl describe service my-clusterip-service
 # Note: ClusterIP Services are not accessible from outside the cluster. To expose a Service externally, consider using NodePort or LoadBalancer types.
-    clusterIP: None  # Optional: Set to None for headless service (no ClusterIP assigned)
+    #clusterIP: None  # Optional: Set to None for headless service (no ClusterIP assigned)
