@@ -1,0 +1,20 @@
+#Example of service type LoadBalancer
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-loadbalancer
+spec:
+    type: LoadBalancer
+    selector:
+        app: nginx
+    ports:
+        - protocol: TCP
+          port: 80
+          targetPort: 80
+
+
+# This service will create an external load balancer (if supported by the cloud provider)
+# and route traffic to the nginx pods on port 80.
+# You can check the external IP assigned to the service using:
+# kubectl get services nginx-loadbalancer
+# Once the external IP is assigned, you can access the nginx application using that IP address.

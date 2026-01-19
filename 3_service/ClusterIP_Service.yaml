@@ -1,0 +1,30 @@
+# This is the example of a ClusterIP Service in Kubernetes
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-clusterip-service
+spec:
+    type: ClusterIP
+    selector:
+        app: my-app
+    ports:
+        - protocol: TCP
+          port: 80
+          targetPort: 8080
+
+
+# In this example:
+# - A Service named "my-clusterip-service" is created.
+# - The Service type is set to "ClusterIP", which means it is only accessible within the cluster.
+# - The Service selects Pods with the label "app: my-app".
+# - The Service exposes port 80 and forwards traffic to port 8080 on the selected Pods.
+# To apply this configuration, save it to a file named "ClusterIP_Service.yaml" and run:
+# kubectl apply -f ClusterIP_Service.yaml
+# You can then access the Service from within the cluster using the ClusterIP address assigned to it.
+# You can check the Service details using:
+# kubectl get service my-clusterip-service
+# kubectl describe service my-clusterip-service
+# Note: ClusterIP Services are not accessible from outside the cluster. To expose a Service externally, consider using NodePort or LoadBalancer types.
+    clusterIP: None  # Optional: Set to None for headless service (no ClusterIP assigned)

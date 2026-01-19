@@ -1,0 +1,24 @@
+#This is the example of NodePort Service in Kubernetes
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-nodeport-service
+spec:
+    type: NodePort
+    selector:
+        app: MyApp
+    ports:
+        - protocol: TCP
+          port: 80
+          targetPort: 9376
+          nodePort: 30007  # Optional: specify a static NodePort, otherwise one will be assigned automatically
+
+# This service will expose the application on each Node's IP at the specified NodePort (30007).
+# You can access the application using <NodeIP>:30007 from outside the cluster.
+# You can check the assigned NodePort using:
+# kubectl get services my-nodeport-service
+# Note: Ensure that the specified NodePort is within the valid range (30000-32767).
+# Once the service is created, you can access the application using any Node's IP address and the NodePort.
+
