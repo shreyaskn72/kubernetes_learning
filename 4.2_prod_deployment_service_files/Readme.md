@@ -356,4 +356,5 @@ Labels → connect everything
 
 ---
 
-![Deployment Service Pod Flow](deployment_service_pod_flow.png)
+# The flow of how a Deployment manages Pods and how a Service routes traffic to those Pods can be visualized as follows:
+![Deployment Service Pod Flow](../4.0_pods_deployment_service_summary/deployment_service_pod_flow.png)
