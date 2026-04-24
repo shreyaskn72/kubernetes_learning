@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+  namespace: prod
+  labels:
+    app: user-service
+    tier: backend
+spec:
+  replicas: 3
+
+  # Deployment selects Pods using this
+  selector:
+    matchLabels:
+      app: user-service
+
+  template:
+    metadata:
+      labels:
+        app: user-service
+        tier: backend
+        version: v1
+    spec:
+      containers:
+        - name: user-service-container
+          image: myrepo/user-service:v1
+
+          ports:
+            - containerPort: 8080
+
+          # Health Checks
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+
+          # Resource Management
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+
+          # Environment variables
+          env:
+            - name: ENV
+              value: "production"
+
+      restartPolicy: Always
+
+  # Rolling update strategy
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1

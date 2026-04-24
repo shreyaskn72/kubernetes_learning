@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app   # IMPORTANT
+  template:
+    metadata:
+      labels:
+        app: my-app   # MUST match selector
+        env: prod
+    spec:
+      containers:
+        - name: app
+          image: nginx
