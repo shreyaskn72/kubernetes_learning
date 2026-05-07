@@ -1,0 +1,120 @@
+# -------------------------------
+# 1. ConfigMap (Non-sensitive config)
+# -------------------------------
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: user-service-config
+  namespace: prod
+data:
+  APP_ENV: "production"
+  LOG_LEVEL: "info"
+
+---
+# -------------------------------
+# 2. Secret (Sensitive data)
+# -------------------------------
+apiVersion: v1
+kind: Secret
+metadata:
+  name: user-service-secret
+  namespace: prod
+type: Opaque
+data:
+  DB_PASSWORD: cGFzc3dvcmQ=   # base64 for "password"
+
+---
+# -------------------------------
+# 3. PersistentVolumeClaim (Storage request)
+# -------------------------------
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: user-service-pvc
+  namespace: prod
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+
+---
+# -------------------------------
+# 4. Deployment
+# -------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+  namespace: prod
+  labels:
+    app: user-service
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: user-service
+
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+        - name: user-service-container
+          image: nginx:latest   # replace with your app image
+
+          ports:
+            - containerPort: 80
+
+          # Inject ConfigMap values
+          env:
+            - name: APP_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-config
+                  key: APP_ENV
+
+            - name: LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-config
+                  key: LOG_LEVEL
+
+            # Inject Secret
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: user-service-secret
+                  key: DB_PASSWORD
+
+          # Mount persistent storage
+          volumeMounts:
+            - name: app-storage
+              mountPath: /usr/share/nginx/html/data
+
+      volumes:
+        - name: app-storage
+          persistentVolumeClaim:
+            claimName: user-service-pvc
+
+---
+# -------------------------------
+# 5. Service
+# -------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+  namespace: prod
+spec:
+  type: ClusterIP
+
+  selector:
+    app: user-service
+
+  ports:
+    - port: 80
+      targetPort: 80
