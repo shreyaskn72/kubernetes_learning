@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app1
+  namespace: ingress-lab
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: app1
+
+  template:
+    metadata:
+      labels:
+        app: app1
+
+    spec:
+      containers:
+        - name: app1
+          image: hashicorp/http-echo
+          args:
+            - "-text=Hello from APP1"
+
+          ports:
+            - containerPort: 5678
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app1-service
+  namespace: ingress-lab
+spec:
+  selector:
+    app: app1
+
+  ports:
+    - port: 80
+      targetPort: 5678
